@@ -3,6 +3,7 @@
  */
 package corchristi;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,13 +38,34 @@ public class App {
                 return true;
         }    
         return false;
+
+
+
     }
+
+
+    public static ArrayList<Integer> between(ArrayList<Integer> ARR, Integer A, Integer B, Integer N){
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for(int i = 0;i < ARR.size();i++){
+            int cur = ARR.get(i);
+            if(cur > A && cur < B && N > 0){
+                result.add(cur);
+                N--;
+
+            }
+
+        }
+
+
+        return result;
+    }
+    
 
     public static void main(String[] args) {
      
         port(getHerokuAssignedPort());
 
-        get("/", (req, res) -> "Hello, World");
+        get("/", (req, res) -> "Hello, World <br> <a href='compute'>Compute page</a>");
 
         post("/compute", (req, res) -> {
           //System.out.println(req.queryParams("input1"));
@@ -65,9 +87,16 @@ public class App {
           String input2 = req.queryParams("input2").replaceAll("\\s","");
           int input2AsInt = Integer.parseInt(input2);
 
-          boolean result = App.search(inputList, input2AsInt);
+          String input3 = req.queryParams("input3").replaceAll("\\s","");
+          int input3AsInt = Integer.parseInt(input3);
 
-          Map<String, Boolean> map = new HashMap<String, Boolean>();
+          String input4 = req.queryParams("input4").replaceAll("\\s","");
+          int input4AsInt = Integer.parseInt(input4);
+
+
+          ArrayList<Integer> result = App.between(inputList, input2AsInt,input3AsInt,input4AsInt);
+
+          Map<String, ArrayList<Integer>> map = new HashMap<String, ArrayList<Integer>>();
           map.put("result", result);
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
