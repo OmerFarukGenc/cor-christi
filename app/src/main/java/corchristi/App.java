@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+
 import spark.ModelAndView;
 import spark.template.mustache.MustacheTemplateEngine;
 
@@ -38,6 +40,7 @@ public class App {
     }
 
     public static void main(String[] args) {
+     
         port(getHerokuAssignedPort());
 
         get("/", (req, res) -> "Hello, World");
